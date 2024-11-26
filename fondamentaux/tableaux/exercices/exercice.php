@@ -3,14 +3,12 @@
 function saisieNombre(string $sms):int{
     return (int) readline($sms);
 }
-
 function saisieOperateur():string{
      do {
        $op=readline("Entrer un Operateur: ");
       } while (!valideOperateur($op));
       return  $op;
 }
-
 //$x==false  ==> !$x
 //$x==true  ==> $x
 function valideOperateur(string $op):bool{
