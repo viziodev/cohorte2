@@ -90,8 +90,10 @@ function minMax1(array $tabNotes):array{
           if ($max<$value) {
             $max=$value;
           }
-     } 
-     return [$min,$max];
+     }   
+        //0    1
+      //[$min,$max];
+     return ["min"=>$min,"max"=>$max];
    
 }
 //fonction transfère dans un autre tableau  toutes les notes<10
@@ -141,8 +143,10 @@ function principal(){
      afficheTab( $tabNote);
      $min=20;
      $max=0;
-     minMax($tabNote,$min,$max);
-     echo "\nMin=$min , Max=$max\n";
+    // minMax($tabNote,$min,$max);
+    $result= minMax1($tabNote);
+        echo "\nMin=". $result["min"];
+        echo "\Max=".  $result["max"];
      $tabTrans=transfert1($tabNote);
      echo "\nAffichage du Tableau de Transfert\n";
      afficheTab($tabTrans);

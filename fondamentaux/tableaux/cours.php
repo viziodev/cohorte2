@@ -19,3 +19,35 @@ printf("\n");
  foreach ($tab1 as $index => $value) {
      printf("\t".$value);
  }
+
+ //Tableau association
+    //Gestion des Dettes : 
+       //Entite ==> 
+        //Client(telephone,nom,prenom,adresse)
+        //Dette(id,date,montant,montantVerser) 
+        //Payement (id,date,montant)
+        //Article(id,nomArticle,qteStok,prix)
+
+     //Occurence ou tuple ou Enregistrement 
+       //Client1("771001010","Wane","Baila","OF")
+       //Client2("771001011","Kane","Fatoumata","OF")
+       //Client2("771001012","Faye","Aissatou","PE")
+    //Realisation Occurence ==>Tableau associatif
+     $client1=[
+         "telephone"=>"771001010",
+          "nom"=>"Wane",
+          "prenom"=>"Baila",
+          "adresse"=>"OF"
+     ];
+       echo $client1["nom"];//Wane;
+
+     $client2=[
+        "telephone"=>"771001011",
+         "nom"=>"Kane",
+         "prenom"=>"Fatoumata",
+         "adresse"=>"OF"
+    ];
+    echo $client1["adresse"];//Wane;
+    
+
+
