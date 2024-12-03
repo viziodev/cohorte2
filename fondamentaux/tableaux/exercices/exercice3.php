@@ -1,9 +1,9 @@
 <?php 
  /*
    Realiser une application qui contient les use case suivants : 
-      1.Ajouter client avec  option ajouter un user
+      1.Ajouter client avec  option ajouter un user(login,password)
       2.Lister les clients 
-      3.Ajouter une dette a un client
+      3.Ajouter une dette(date,montant,montantAvance) a un client
       4.Lister les dettes un client
       5.Lister toutes  les dettes
   */
@@ -11,12 +11,108 @@
 
 
 /*
-   $clients[0] ==> [
+    
+
+        $uneDette=[
+          "date"=>date("d-m-Y H:i:s");                     ,
+          "montant"=>20000,
+          "montantAvance"=>0,
+        ];
+
+
+         $uneDette1=[
+          "date"=>date("d-m-Y H:i:s");                     ,
+          "montant"=>2000,
+          "montantAvance"=>1000,
+        ];
+
+
+         $client = [
          "telephone"=>"771001010",
           "nom"=>"Wane",
-         "prenom"=>"Baila",
-         "adresse"=>"OF"
-        ]
+          "prenom"=>"Baila",
+          "adresse"=>"OF",
+          "user"=>[
+              "login"=>"client1",
+              "password"=>"passer",
+          ],
+          "dettes"=>[]
+        
+        ];
+
+         $client["user"]  ==>  [
+              "login"=>"client1",
+              "password"=>"passer",
+          ]
+         $client["user"]["login"]==> client1
+         $client["user"]["password"]==> passer
+
+         $client1 = [
+         "telephone"=>"771001010",
+          "nom"=>"Wane",
+          "prenom"=>"Baila",
+          "adresse"=>"OF",
+          "user"=>null,
+          "dettes"=>[
+                [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>20000,
+                 "montantAvance"=>0,
+                ],
+                [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>20000,
+                 "montantAvance"=>0,
+                ]
+
+          ]
+
+        ];
+
+         $client1["dettes"] 
+         [
+                [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>20000,
+                 "montantAvance"=>0,
+                ],
+                [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>2000,
+                 "montantAvance"=>1000,
+                ]
+
+          ]
+        $client1["dettes"][0]
+              [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>20000,
+                 "montantAvance"=>0,
+              ]
+        //Montant   ==>   $client1["dettes"][0]["montant"]
+        //montantAvance   ==>   $client1["dettes"][0]["montantAvance"]
+       
+        $client1["dettes"][1]
+                [
+                 "date"=>date("d-m-Y H:i:s");                     ,
+                 "montant"=>2000,
+                 "montantAvance"=>1000,
+                ]
+
+        $client1["dettes"][1]["date"]
+         //Afficher les dettes d'un client
+         foreach ($client1["dettes"] as  $v) {
+             echo "Date : ". $v["date"]."\t";
+             echo "Montant : ". $v["montant"]."\t";
+             echo "Montant Avance : ". $v["montantAvance"]."\t";
+        
+
+
+         $
+
+
+
+
           $clients[0]["nom"] ==> Wane
           $clients[0]["adresse"] ==> Wane
 
@@ -34,7 +130,6 @@ function ajouterClient(array &$clients,array $client){
     $clients[]=$client;
 }
 //Use Case Interne 
-
 function estVide(string $value):bool{
     //$value=="" ou empty($value)
     if (empty($value)) {
@@ -49,6 +144,15 @@ function rechercherClientParTel(array $clients,string $telephone):array|null{
         }
      }
      return null;
+}
+
+function getPosClientParTel(array $clients,string $telephone):int{
+    foreach ($clients as $index=>  $client) {
+        if ($client["telephone"] == $telephone) {
+            return $index;
+        }
+     }
+     return -1;
 }
 
 
@@ -68,6 +172,30 @@ function telephoneIsUnique(array $clients,string $sms):string{
    
 }
 
+function estPositif(string $sms):string{
+    do {
+        $value=(float) readline($sms);
+    } while ($value<=0);
+    return $value;
+}
+
+
+function saisieUser(){
+       return [
+              "login"=>saisieChampObligatoire(" Entrer le Login: "),
+              "password"=>saisieChampObligatoire(" Entrer le password: "),
+       ];
+}
+
+//$avance==false ou !$avance
+function saisieDette(bool $avance=false):array{
+    return [
+        "date"=>date("d-m-Y H:i:s"),
+        "montant"=>estPositif("Veuillez entre le montant de la dette"),
+        "montantAvance"=>!$avance?0:estPositif("Veuillez entre l'avance  de la dette"),
+    ];
+}
+
 
 function saisieClient(array $clients):array{
     return [
@@ -75,7 +203,34 @@ function saisieClient(array $clients):array{
          "nom"=>saisieChampObligatoire(" Entrer le Nom: "),
          "prenom"=>saisieChampObligatoire(" Entrer le Prenom: "),
          "adresse"=>saisieChampObligatoire(" Entrer l'Adresse: "),
+         "user"=>null,
+         "dettes"=>[]
     ] ; 
+
+}
+function afficheDettes(array $dettes):void{
+    echo"\n -------Les dettes-----------------\n";
+    foreach ($dettes as  $v) {
+        echo "Date : ". $v["date"]."\t";
+        echo "Montant : ". $v["montant"]."\t";
+        echo "Montant Avance : ". $v["montantAvance"]."\t";
+    }
+}
+function afficheUnClient(array $client):void{
+    echo"\n-----------------------------------------\n";
+    echo "Telephone : ". $client["telephone"]."\t";
+    echo "Nom : ". $client["nom"]."\t";
+    echo "Prenom : ". $client["prenom"]."\t";
+    echo "Adresse : ". $client["adresse"]."\t";
+    if ($client["user"]!=null) {
+        echo "Login : ".  $client["user"]["login"]."\t";
+        echo "Password : ".  $client["user"]["password"]."\t";
+        
+    }
+    if (count($client["dettes"])!=0) { {
+        afficheDettes($client["dettes"]);
+    }
+  }
 }
 
 function afficheClient(array $clients):void{
@@ -83,14 +238,9 @@ function afficheClient(array $clients):void{
         echo "Pas de client a affiche";
     }else {
         foreach ($clients as  $client) {
-            echo"\n-----------------------------------------\n";
-            echo "Telephone : ". $client["telephone"]."\t";
-            echo "Nom : ". $client["nom"]."\t";
-            echo "Prenom : ". $client["prenom"]."\t";
-            echo "Adresse : ". $client["adresse"]."\t";
-      }
-    }
-    
+            afficheUnClient($client);
+       }
+ }
 }
 
 
@@ -115,6 +265,12 @@ function afficheClient(array $clients):void{
        switch ($choix) {
         case 1:
            $client= saisieClient($clients);
+           do {
+               $rep= readline("Voulez vous ajouter un compte a ce Client O/N");
+           } while ( $rep!="O" && $rep!="N" );
+            if ($rep=="O") {
+                $client["user"]=saisieUser();
+            }
            ajouterClient($clients,$client);
             # code...
         break;
@@ -122,10 +278,24 @@ function afficheClient(array $clients):void{
             afficheClient( $clients);
         break;
         case 3:
-            # code...
+           $telephone= saisieChampObligatoire(" Entrer le Telephone: ");
+           $pos=getPosClientParTel($clients,$telephone);
+           if ($pos==-1) {
+             echo "Le numero $telephone ne correspond pas a un client";
+           }else{
+             $dette= saisieDette();
+           //  array_push( $client["dettes"],$dette);
+             $clients[$pos]["dettes"][]=$dette;
+           }
         break;
         case 4:
-            # code...
+            $telephone= saisieChampObligatoire(" Entrer le Telephone: ");
+            $client=rechercherClientParTel($clients,$telephone);
+            if ($client==null) {
+              echo "Le numero $telephone ne correspond pas a un client";
+            }else{
+                afficheUnClient($client);
+            }
         break;
         case 5:
             # code...

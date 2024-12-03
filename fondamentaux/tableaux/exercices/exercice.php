@@ -61,3 +61,24 @@ function principal(){
 }
 
 principal();
+//index  0  1  2  3 
+   $tab=[1, 4, 6, 34];
+foreach ( $tab as $index => $value) {
+    echo "$index => $value";
+}
+
+//0=>1
+//1=>4
+//2=>6
+//2=>34
+
+
+$tab=[1, 4, 6, 34];
+
+$x=&$tab[0]; //$x=1
+$x=2;
+
+ //array_push($tab,4);//$tab=[1, 4, 6, 34,4];
+ $tab[]=11;//$tab=[1, 4, 6, 34,11];
+
+

@@ -34,4 +34,19 @@
    
 
 
+
+   $x=(int)readline("Entrer une valeur");
+   $bool=false;
+
+   if ($bool) {
+      $ok="True";
+   }else{
+      $ok="False";
+   }
+
+   //Operateur Ternaire
+   $ok=$bool?"True":"False";
+
+
+
 ?>
